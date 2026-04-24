@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prajwal T Prasanna — Embedded & Autonomous Systems Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --surface: #111116;
+    --surface2: #18181f;
+    --amber: #f5a623;
+    --amber-dim: #c47c0f;
+    --amber-glow: rgba(245,166,35,0.12);
+    --teal: #00d4c8;
+    --teal-dim: rgba(0,212,200,0.08);
+    --text: #e8e4dc;
+    --muted: #6b6870;
+    --border: rgba(245,166,35,0.15);
+    --mono: 'Space Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── GRID BACKGROUND ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,166,35,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 48px;
+    background: rgba(10,10,12,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 17px;
+    color: var(--amber);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--amber); }
+
+  .status-dot {
+    width: 7px; height: 7px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,212,200,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 5px rgba(0,212,200,0); }
+  }
+
+  /* ─── WRAPPER ─── */
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+  }
+
+  .hero-inner {
+    padding: 80px 0 60px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 2px;
+    font-size: 11px;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    background: var(--amber-glow);
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 8px;
+  }
+
+  .hero-name span {
+    color: var(--amber);
+    position: relative;
+  }
+
+  .hero-name span::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0; right: 0;
+    height: 3px;
+    background: var(--amber);
+    opacity: 0.3;
+  }
+
+  .hero-sub {
+    font-family: var(--display);
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: 400;
+    color: var(--muted);
+    margin-bottom: 48px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-sub strong { color: var(--teal); font-weight: 600; }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat { }
+  .stat-val {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--amber);
+    color: #0a0a0c;
+    border: 1px solid var(--amber);
+    font-weight: 700;
+  }
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--amber);
+    box-shadow: 0 0 20px rgba(245,166,35,0.25);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  /* ─── SECTION COMMONS ─── */
+  section {
+    padding: 100px 0;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 48px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 56px;
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    border-left: 1px solid var(--border);
+  }
+
+  .exp-card {
+    position: relative;
+    margin-bottom: 56px;
+    padding: 28px 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 32px;
+    width: 9px;
+    height: 9px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--bg), 0 0 8px var(--amber);
+  }
+
+  .exp-card:hover {
+    border-color: rgba(245,166,35,0.4);
+    box-shadow: 0 0 30px rgba(245,166,35,0.06);
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .exp-role {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .exp-date {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    margin-top: 4px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+
+  .exp-company {
+    font-size: 13px;
+    color: var(--amber);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-bullets li {
+    padding-left: 16px;
+    position: relative;
+    color: #b0acb8;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+    font-size: 10px;
+    top: 3px;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 3px 9px;
+    background: var(--amber-glow);
+    border: 1px solid rgba(245,166,35,0.2);
+    color: var(--amber);
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tag-teal {
+    background: var(--teal-dim);
+    border-color: rgba(0,212,200,0.2);
+    color: var(--teal);
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(245,166,35,0.35);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 30px rgba(245,166,35,0.06);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-num {
+    font-family: var(--display);
+    font-size: 56px;
+    font-weight: 800;
+    color: rgba(245,166,35,0.07);
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .project-icon {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .project-title {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .project-desc {
+    font-size: 12.5px;
+    color: #8e8a98;
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .skill-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .skill-block:hover { border-color: rgba(245,166,35,0.3); }
+
+  .skill-block-title {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .skill-pill {
+    font-size: 11px;
+    padding: 5px 11px;
+    background: var(--surface2);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: var(--text);
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+
+  .skill-pill:hover {
+    background: var(--amber-glow);
+    border-color: rgba(245,166,35,0.25);
+    color: var(--amber);
+  }
+
+  /* ─── EDUCATION ─── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edu-degree {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .edu-uni {
+    color: var(--amber);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .edu-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .edu-courses {
+    font-size: 12px;
+    color: #8e8a98;
+    line-height: 1.7;
+  }
+
+  .edu-courses strong { color: var(--text); }
+
+  .edu-badge {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 11px;
+    background: var(--amber-glow);
+    border: 1px solid var(--border);
+    color: var(--amber);
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── PUBLICATION ─── */
+  .pub-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 3px;
+    padding: 28px 32px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .pub-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .pub-title {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .pub-venue {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .pub-doi {
+    font-size: 11px;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding-bottom: 120px;
+  }
+
+  .contact-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 56px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  }
+
+  .contact-heading {
+    font-family: var(--display);
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 16px;
+  }
+
+  .contact-sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 36px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+
+  footer span { color: var(--amber); }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 700px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .wrapper { padding: 0 20px; }
+    section { padding: 72px 0; }
+    .contact-box { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PTP_</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="font-size:11px; color:var(--muted); display:flex; align-items:center;">
+    <span class="status-dot"></span> Open to opportunities
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrapper">
+    <div class="hero-inner">
+      <div class="hero-tag">
+        ⚡ Embedded & Autonomous Systems Engineer
+      </div>
+      <h1 class="hero-name">
+        Prajwal<br><span>T Prasanna</span>
+      </h1>
+      <p class="hero-sub">
+        M.S. Electrical Engineering @ <strong>University of Cincinnati</strong> &mdash;
+        Building firmware, autonomous systems & intelligent hardware.
+      </p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-val">1</div>
+          <div class="stat-lbl">Published Paper</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">1.8</div>
+          <div class="stat-lbl">Years Experience</div>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Get in touch →</a>
+        <a href="#projects" class="btn btn-ghost">View projects</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrapper">
+    <div class="section-label">Work History</div>
+    <h2 class="section-title">Experience</h2>
+
+    <div class="timeline">
+
+      <div class="exp-card fade-up">
+        <div class="exp-header">
+          <div class="exp-role">Embedded Software Developer</div>
+          <div class="exp-date">Jun 2024 – Jul 2025</div>
+        </div>
+        <div class="exp-company">Elecsis Infotech · Bengaluru, India</div>
+        <ul class="exp-bullets">
+          <li>Engineered 6+ production-ready embedded drivers (GPIO, UART, EEPROM, SPI, I2C, WDT) for PIC18, ARM, and HOLTEK microcontrollers — cutting firmware integration time by 20% across 3+ product lines.</li>
+          <li>Delivered a Wi-Fi-based IoT firmware solution on Arduino enabling real-time device connectivity, reducing manual monitoring effort by 35%.</li>
+          <li>Architected an EEPROM-backed digital dose counter for Asthma/COPD patients with sleep-mode optimization, extending battery life by 40% with 100% data retention across power cycles.</li>
+          <li>Authored 10+ technical documents (test procedures, user manuals, spec sheets) standardizing QA workflows and cutting new developer onboarding time by 25%.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">PIC18</span>
+          <span class="tag">ARM</span>
+          <span class="tag">GPIO</span>
+          <span class="tag">UART</span>
+          <span class="tag">SPI</span>
+          <span class="tag">I2C</span>
+          <span class="tag">IoT</span>
+          <span class="tag">EEPROM</span>
+        </div>
+      </div>
+
+      <div class="exp-card fade-up">
+        <div class="exp-header">
+          <div class="exp-role">Student Trainee — Embedded</div>
+          <div class="exp-date">Feb 2024 – May 2024</div>
+        </div>
+        <div class="exp-company">Bosch Global Software Technologies · Adugodi, Bengaluru</div>
+        <ul class="exp-bullets">
+          <li>Developed and executed test cases for the Data Log Book (DLB) on DASy ECUs.</li>
+          <li>Performed Measurement Technique Adapter (MTA) tests to evaluate ECU workload and stress tolerance.</li>
+          <li>Executed Robustness Flash Loop Tests (RFT) involving ECU programming and reprogramming cycles.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">CAPL</span>
+          <span class="tag">CANoe</span>
+          <span class="tag">vTest Studio</span>
+          <span class="tag">Jira</span>
+          <span class="tag">DOORS NG</span>
+          <span class="tag-teal tag">CAN</span>
+          <span class="tag-teal tag">UDS</span>
+          <span class="tag-teal tag">Automotive Ethernet</span>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+          <a href="Bosch_DASy_Project_Report.pdf" target="_blank" class="btn btn-ghost" style="font-size:11px; padding:8px 16px;">
+            📄 Project Report — DASy ECU
+          </a>
+          <a href="Bosch_Internship_Training_Report.pdf" target="_blank" class="btn btn-ghost" style="font-size:11px; padding:8px 16px;">
+            📄 Internship Training Report
+          </a>
+        </div>
+      </div>
+
+      <div class="exp-card fade-up">
+        <div class="exp-header">
+          <div class="exp-role">Autonomous Vehicle Intern</div>
+          <div class="exp-date">May 2023</div>
+        </div>
+        <div class="exp-company">Edutech India Pvt. Ltd. · Chennai, India</div>
+        <ul class="exp-bullets">
+          <li>Designed steering-angle-based ROI expansion for obstacle detection using depth sensors.</li>
+          <li>Implemented angle-constrained 2D LiDAR filtering to remove unwanted point clouds in real-time perception pipelines.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">MATLAB</span>
+          <span class="tag">Simulink</span>
+          <span class="tag-teal tag">LiDAR</span>
+          <span class="tag-teal tag">Depth Sensors</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrapper">
+    <div class="section-label">Selected Work</div>
+    <h2 class="section-title">Projects</h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card fade-up">
+        <div class="project-num">01</div>
+        <div class="project-icon">🚗</div>
+        <h3 class="project-title">Adaptive Cruise Control System</h3>
+        <p class="project-desc">The Q-Car had no way of knowing how close it was getting to an obstacle — it would just keep moving. I needed it to detect, judge distance, and adjust speed on its own. I used an Intel RealSense D435 depth camera for perception and built a PI controller in MATLAB/Simulink that took live distance readings and translated them into throttle commands. The tricky part was tuning the controller — too aggressive and the car would oscillate, too slow and it wouldn't brake in time. Getting that balance right taught me more about real-time control systems than any textbook had. When it finally decelerated smoothly and held a safe following distance on its own, that was the moment I knew it worked.</p>
+        <div style="margin: 16px 0; border-radius: 3px; overflow: hidden; border: 1px solid var(--border); position: relative; padding-bottom: 56.25%; height: 0;">
+          <iframe src="https://www.youtube.com/embed/JG3LzAluHVg" title="Adaptive Cruise Control Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+        </div>
+        <div class="tag-row">
+          <span class="tag">MATLAB</span>
+          <span class="tag">Simulink</span>
+          <span class="tag">PI Controller</span>
+          <span class="tag-teal tag">RealSense D435</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-num">02</div>
+        <div class="project-icon">🛣️</div>
+        <h3 class="project-title">Lane Detection & Vehicle Guidance</h3>
+        <p class="project-desc">The challenge with lane detection isn't just finding lines — it's finding the right lines under varying lighting, curves, and road noise. I built a pipeline using Canny edge detection to isolate boundaries and Hough Transform to extract lane geometry. From there, I computed vanishing points and lane ratios to determine the vehicle's heading in real time. What I learned: perception problems are never as clean as they look in demos. A lot of the work was handling edge cases where shadows or faded markings would confuse the pipeline — and building logic robust enough to recover gracefully.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span>
+          <span class="tag">OpenCV</span>
+          <span class="tag-teal tag">Canny Edge</span>
+          <span class="tag-teal tag">Hough Transform</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-num">03</div>
+        <div class="project-icon">🗺️</div>
+        <h3 class="project-title">Path Planning — RRT Algorithms</h3>
+        <p class="project-desc">Given a map with obstacles, how does a robot find a safe path without exhaustively searching every possibility? That question led me to implement RRT, RRT*, and Bi-RRT* in MATLAB. Basic RRT finds a path but doesn't care how inefficient it is. RRT* keeps refining toward the optimal path as it explores. Bi-RRT* grows trees from both start and goal simultaneously — dramatically faster in tight spaces. Benchmarking all three side by side made the trade-offs concrete: you're always choosing between exploration speed and path quality. That insight directly shapes how I think about algorithm selection in constrained embedded environments.</p>
+        <div class="tag-row">
+          <span class="tag">MATLAB</span>
+          <span class="tag-teal tag">RRT*</span>
+          <span class="tag-teal tag">Bi-RRT*</span>
+          <span class="tag">Path Planning</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-num">04</div>
+        <div class="project-icon">💊</div>
+        <h3 class="project-title">EEPROM Digital Dose Counter</h3>
+        <p class="project-desc">This was a medical device — a dose counter for Asthma and COPD patients. The constraint that mattered most: it runs on a battery, and it cannot lose data if power cuts out mid-dose. I solved the persistence problem by writing dose counts to EEPROM after every actuation, so a power cycle could never corrupt the record. For battery life, I pushed the MCU into sleep mode between uses, waking only on actuation events. The result was 40% better battery life and zero data loss across power cycles. Building something that a patient depends on daily changed how seriously I take reliability in firmware.</p>
+        <div class="tag-row">
+          <span class="tag">Embedded C</span>
+          <span class="tag">EEPROM</span>
+          <span class="tag">ARM</span>
+          <span class="tag-teal tag">Medical IoT</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-num">05</div>
+        <div class="project-icon">📡</div>
+        <h3 class="project-title">Arduino-Based Radar System</h3>
+        <p class="project-desc">I wanted to build something that visualized space — not just detect an object but show where it is. I mounted an ultrasonic sensor on a DC motor and swept it in an arc, computing angle and distance at each step. The data fed into a custom display that rendered a live radar sweep. Adding wireless control via an HC-05 Bluetooth module was the part that pushed me — suddenly the system had to handle asynchronous serial input while still running the sweep loop without blocking. That concurrency challenge was my first real taste of writing interrupt-driven embedded code, and it stuck with me.</p>
+        <div class="tag-row">
+          <span class="tag">Arduino</span>
+          <span class="tag">Embedded C</span>
+          <span class="tag">HC-05</span>
+          <span class="tag-teal tag">Ultrasonic</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-num">06</div>
+        <div class="project-icon">👥</div>
+        <h3 class="project-title">Social Distancing Monitor — Deep Learning</h3>
+        <p class="project-desc">During COVID, enforcing distancing in public spaces was a real problem with no scalable solution. My team decided to build one. We used YOLOv3 to detect people in a video feed and the Centroid Algorithm to track and measure inter-person distances frame by frame. Violations triggered an alert via a GSM module. The hardest part was making YOLO run fast enough on our hardware to be useful in real time — we had to make deliberate trade-offs between detection accuracy and inference speed. Leading a team through that problem taught me as much about communication and decision-making under constraints as it did about computer vision.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span>
+          <span class="tag">YOLO V3</span>
+          <span class="tag">TensorFlow</span>
+          <span class="tag">OpenCV</span>
+          <span class="tag">Keras</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrapper">
+    <div class="section-label">Technical Stack</div>
+    <h2 class="section-title">Skills</h2>
+
+    <div class="skills-layout">
+      <div class="skill-block fade-up">
+        <div class="skill-block-title">⚙️ &nbsp;Programming Languages</div>
+        <div class="skill-list">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">C++</span>
+          <span class="skill-pill">Embedded C</span>
+          <span class="skill-pill">MATLAB</span>
+          <span class="skill-pill">CAPL</span>
+        </div>
+      </div>
+
+      <div class="skill-block fade-up">
+        <div class="skill-block-title">🤖 &nbsp;ML & Computer Vision</div>
+        <div class="skill-list">
+          <span class="skill-pill">PyTorch</span>
+          <span class="skill-pill">TensorFlow</span>
+          <span class="skill-pill">OpenCV</span>
+          <span class="skill-pill">scikit-learn</span>
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">YOLO</span>
+        </div>
+      </div>
+
+      <div class="skill-block fade-up">
+        <div class="skill-block-title">🔧 &nbsp;Embedded & MCU</div>
+        <div class="skill-list">
+          <span class="skill-pill">PIC18</span>
+          <span class="skill-pill">ARM Cortex</span>
+          <span class="skill-pill">HOLTEK</span>
+          <span class="skill-pill">Arduino</span>
+          <span class="skill-pill">Keil µVision</span>
+          <span class="skill-pill">MPLAB IDE</span>
+        </div>
+      </div>
+
+      <div class="skill-block fade-up">
+        <div class="skill-block-title">🚗 &nbsp;Automotive & Testing</div>
+        <div class="skill-list">
+          <span class="skill-pill">CANoe</span>
+          <span class="skill-pill">vTest Studio</span>
+          <span class="skill-pill">CAN Bus</span>
+          <span class="skill-pill">UDS</span>
+          <span class="skill-pill">ECU Programming</span>
+          <span class="skill-pill">DOORS NG</span>
+        </div>
+      </div>
+
+      <div class="skill-block fade-up">
+        <div class="skill-block-title">📊 &nbsp;Tools & Platforms</div>
+        <div class="skill-list">
+          <span class="skill-pill">Simulink</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">VS Code</span>
+          <span class="skill-pill">Jupyter</span>
+          <span class="skill-pill">Matplotlib</span>
+          <span class="skill-pill">Jira</span>
+        </div>
+      </div>
+
+      <div class="skill-block fade-up">
+        <div class="skill-block-title">📚 &nbsp;Domains</div>
+        <div class="skill-list">
+          <span class="skill-pill">VLSI Design</span>
+          <span class="skill-pill">Autonomous Vehicles</span>
+          <span class="skill-pill">IoT Firmware</span>
+          <span class="skill-pill">LiDAR</span>
+          <span class="skill-pill">Signal Processing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="wrapper">
+    <div class="section-label">Academic Background</div>
+    <h2 class="section-title">Education</h2>
+
+    <div class="edu-grid">
+      <div class="edu-card fade-up">
+        <div class="edu-badge">Expected 2027</div>
+        <div class="edu-degree">M.S. Electrical Engineering</div>
+        <div class="edu-uni">University of Cincinnati</div>
+        <div class="edu-meta">Cincinnati, OH · Current</div>
+        <div class="edu-courses">
+          <strong>Coursework:</strong><br>
+          Introduction to VLSI Design · Trust in Digital Hardware · Nanoelectronic Devices for VLSI · Distributed Operating Systems
+        </div>
+      </div>
+
+      <div class="edu-card fade-up">
+        <div class="edu-badge">GPA 3.3 / 4.0</div>
+        <div class="edu-degree">B.E. Electronics & Communication</div>
+        <div class="edu-uni">KLE Technological University</div>
+        <div class="edu-meta">Hubballi, India · June 2024</div>
+        <div class="edu-courses">
+          <strong>Coursework:</strong><br>
+          Digital & Analog Electronics · CMOS VLSI Circuits · Static Timing Analysis
+        </div>
+      </div>
+    </div>
+
+    <!-- Publication -->
+    <div style="margin-top: 48px;">
+      <div class="section-label" style="margin-bottom: 24px;">Research</div>
+      <div class="pub-card fade-up">
+        <div class="pub-icon">📄</div>
+        <div>
+          <div class="pub-title">Intelligent Adaptive Cruise Control with Enhanced Obstacle Detection for Q-Car Platform</div>
+          <div class="pub-venue">National Conference on Control Instrumentation and System Conference, 2023</div>
+          <div class="pub-doi">DOI: 10.1007/978-981-97-5866-1_5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrapper">
+    <div class="contact-box fade-up">
+      <h2 class="contact-heading">Let's build something.</h2>
+      <p class="contact-sub">Open to full-time roles, research collaborations, and internships in embedded systems, autonomous vehicles, or VLSI design.</p>
+      <div class="contact-links">
+        <a href="mailto:tumberpl@mail.uc.edu" class="btn btn-primary">✉ tumberpl@mail.uc.edu</a>
+        <a href="tel:+15132232147" class="btn btn-ghost">📞 +1 513 223 2147</a>
+        <a href="https://linkedin.com" class="btn btn-ghost">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrapper">
+    <span>Prajwal T Prasanna</span> — Embedded & Autonomous Systems Engineer · Cincinnati, OH
+  </div>
+</footer>
+
+<script>
+  // Intersection observer for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--amber)' : '';
+    });
+  });
+</script>
+</body>
+</html>
